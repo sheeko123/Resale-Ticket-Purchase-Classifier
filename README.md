@@ -14,6 +14,10 @@ This dashboard provides insights into ticket pricing trends and helps identify o
 - Savings calculator
 - Real-time deal probability predictions
 
+## Dashboard
+https://resale-ticket-purchase-classifier.streamlit.app/
+
+
 ## Installation
 
 1. Clone the repository:
