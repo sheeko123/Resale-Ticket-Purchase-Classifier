@@ -283,6 +283,7 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
+@st.cache_data
 def load_data():
     """Load all the saved JSON files from the streamlit_data directory"""
     data_dir = Path('streamlit_data')
@@ -308,6 +309,7 @@ def load_data():
         st.error(f"Error loading data: {str(e)}")
         return None, None, None, None, None
 
+@st.cache_data
 def create_metrics_comparison_chart(metrics):
     """Create a grouped bar chart comparing model metrics"""
     # Define the metrics to plot
@@ -348,6 +350,7 @@ def create_metrics_comparison_chart(metrics):
     
     return fig
 
+@st.cache_data
 def create_confusion_matrix_plot(y_true, y_pred, model_name):
     """Create a confusion matrix plot for a model"""
     # Calculate confusion matrix
@@ -373,6 +376,7 @@ def create_confusion_matrix_plot(y_true, y_pred, model_name):
     
     return fig
 
+@st.cache_data
 def create_feature_importance_plot(feature_importance, selected_model=None):
     """Create a feature importance plot using Plotly."""
     # Create figure
@@ -448,6 +452,7 @@ def create_feature_importance_plot(feature_importance, selected_model=None):
     
     return fig, importance_df
 
+@st.cache_data
 def create_probability_vs_days_chart(days_until_event_probs, model_name='xgboost'):
     """Create a line chart showing average predicted probability vs days until event"""
     if model_name not in days_until_event_probs:
@@ -513,6 +518,7 @@ def create_probability_vs_days_chart(days_until_event_probs, model_name='xgboost
     
     return fig
 
+@st.cache_data
 def load_visualization_data():
     """Load visualization data from JSON file"""
     try:
@@ -522,6 +528,7 @@ def load_visualization_data():
         st.error("Visualization data not found. Please run the model training first.")
         return None
 
+@st.cache_data
 def create_average_price_chart(viz_data, days_range=(0, 60)):
     """Create a line chart showing average price vs days until event for all events"""
     # Get all events data
@@ -586,6 +593,62 @@ def create_average_price_chart(viz_data, days_range=(0, 60)):
             x=1.05
         ),
         hovermode='x unified'
+    )
+    
+    return fig
+
+@st.cache_data
+def create_roc_curves(metrics, predictions):
+    """Create ROC curves for all models"""
+    # Get true labels
+    y_true = predictions['true_labels']['test']
+    
+    # Create figure
+    fig = go.Figure()
+    
+    # Define colors for each model
+    colors = {
+        'random_forest': '#1f77b4',  # blue
+        'gradient_boost': '#2ca02c',  # green
+        'xgboost': '#ff7f0e',  # orange
+        'logistic_regression': '#d62728',  # red
+        'ensemble': '#9467bd'  # purple
+    }
+    
+    # Add ROC curve for each model
+    for model_name in metrics.keys():
+        try:
+            # Get probabilities for the model
+            y_prob = predictions[model_name]['test']['probabilities']
+            
+            # Calculate ROC curve
+            fpr, tpr, _ = roc_curve(y_true, y_prob)
+            auc = metrics[model_name]['test']['auc']
+            
+            # Add trace
+            fig.add_trace(go.Scatter(
+                x=fpr,
+                y=tpr,
+                name=f"{model_name.replace('_', ' ').title()} (AUC = {auc:.3f})",
+                line=dict(color=colors.get(model_name, '#1f77b4'))
+            ))
+        except Exception as e:
+            st.error(f"Could not create ROC curve for {model_name}: {str(e)}")
+    
+    # Add diagonal line
+    fig.add_trace(go.Scatter(
+        x=[0, 1],
+        y=[0, 1],
+        name='Random',
+        line=dict(color='gray', dash='dash')
+    ))
+    
+    # Update layout
+    fig.update_layout(
+        title='ROC Curves',
+        xaxis_title='False Positive Rate',
+        yaxis_title='True Positive Rate',
+        showlegend=True
     )
     
     return fig
@@ -787,61 +850,6 @@ def create_days_until_event_tab():
         
         This analysis underscores the importance of considering both the probability of finding a good deal and the associated uncertainty when making purchasing decisions at different time points before an event.
         """)
-
-def create_roc_curves(metrics, predictions):
-    """Create ROC curves for all models"""
-    # Get true labels
-    y_true = predictions['true_labels']['test']
-    
-    # Create figure
-    fig = go.Figure()
-    
-    # Define colors for each model
-    colors = {
-        'random_forest': '#1f77b4',  # blue
-        'gradient_boost': '#2ca02c',  # green
-        'xgboost': '#ff7f0e',  # orange
-        'logistic_regression': '#d62728',  # red
-        'ensemble': '#9467bd'  # purple
-    }
-    
-    # Add ROC curve for each model
-    for model_name in metrics.keys():
-        try:
-            # Get probabilities for the model
-            y_prob = predictions[model_name]['test']['probabilities']
-            
-            # Calculate ROC curve
-            fpr, tpr, _ = roc_curve(y_true, y_prob)
-            auc = metrics[model_name]['test']['auc']
-            
-            # Add trace
-            fig.add_trace(go.Scatter(
-                x=fpr,
-                y=tpr,
-                name=f"{model_name.replace('_', ' ').title()} (AUC = {auc:.3f})",
-                line=dict(color=colors.get(model_name, '#1f77b4'))
-            ))
-        except Exception as e:
-            st.error(f"Could not create ROC curve for {model_name}: {str(e)}")
-    
-    # Add diagonal line
-    fig.add_trace(go.Scatter(
-        x=[0, 1],
-        y=[0, 1],
-        name='Random',
-        line=dict(color='gray', dash='dash')
-    ))
-    
-    # Update layout
-    fig.update_layout(
-        title='ROC Curves',
-        xaxis_title='False Positive Rate',
-        yaxis_title='True Positive Rate',
-        showlegend=True
-    )
-    
-    return fig
 
 def create_savings_calculator_tab():
     """Create tab for savings calculator"""
