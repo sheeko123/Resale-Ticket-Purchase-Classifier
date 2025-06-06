@@ -2,13 +2,13 @@ import streamlit as st
 import pandas as pd
 import json
 import plotly.graph_objects as go
+import plotly.express as px
 from pathlib import Path
 import numpy as np
 from sklearn.metrics import confusion_matrix, roc_curve
 import seaborn as sns
 import matplotlib.pyplot as plt
 from calculate_savings import calculate_savings
-import plotly.express as px
 
 # Set page config
 st.set_page_config(

@@ -24,12 +24,17 @@ cd ticket-price-analyzer
 
 2. Install the required packages:
 ```bash
-pip install -r streamlit_requirements.txt
+pip install -r requirements.txt
 ```
 
 3. Run the dashboard:
 ```bash
 streamlit run src/streamlit_app.py
+```
+N.B. If wanting to play with the model.
+```
+Model requirements is in src/model
+Along with the ticket_analyzer_model
 ```
 
 ## Project Structure
@@ -44,7 +49,7 @@ ticket-price-analyzer/
 │   ├── model_predictions.json
 │   ├── metadata.json
 │   └── days_until_event_probabilities.json
-├── streamlit_requirements.txt
+├── requirements.txt
 └── README.md
 ```
 
