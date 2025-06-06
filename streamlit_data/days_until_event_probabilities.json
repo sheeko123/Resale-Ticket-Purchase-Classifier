@@ -1,0 +1,74 @@
+{
+  "random_forest": {
+    "days_until_event": [
+      0,
+      1
+    ],
+    "mean_probability": [
+      0.6,
+      0.17
+    ],
+    "std_probability": [
+      0.0,
+      0.0
+    ],
+    "count": [
+      9710,
+      3047
+    ]
+  },
+  "gradient_boost": {
+    "days_until_event": [
+      0,
+      1
+    ],
+    "mean_probability": [
+      0.5232205844108896,
+      0.02136267255084531
+    ],
+    "std_probability": [
+      0.0,
+      0.0
+    ],
+    "count": [
+      9710,
+      3047
+    ]
+  },
+  "xgboost": {
+    "days_until_event": [
+      0,
+      1
+    ],
+    "mean_probability": [
+      0.625913143157959,
+      0.0021340816747397184
+    ],
+    "std_probability": [
+      0.0,
+      0.0
+    ],
+    "count": [
+      9710,
+      3047
+    ]
+  },
+  "logistic_regression": {
+    "days_until_event": [
+      0,
+      1
+    ],
+    "mean_probability": [
+      0.9999939528377109,
+      0.022471990645864054
+    ],
+    "std_probability": [
+      0.0,
+      0.0
+    ],
+    "count": [
+      9710,
+      3047
+    ]
+  }
+}
