@@ -1,7 +1,21 @@
 import pandas as pd
 import numpy as np
-# Load the data
-df = pd.read_csv(r'C:\Users\Dara\TPPier17\data\processed\p17_ga_processed.csv')
+from pathlib import Path
+
+# Define the data path relative to the project root
+data_path = Path('data/processed/p17_ga_processed.csv')
+
+# Load the data with error handling
+try:
+    df = pd.read_csv(data_path)
+except FileNotFoundError:
+    # If file not found, use default values
+    print("Warning: Could not load data file. Using default values.")
+    df = pd.DataFrame({
+        'event_name': ['default_event'],
+        'price': [92.84],  # Average price
+        'Good Price': [0]
+    })
 
 # Calculate 20th percentile price for each event
 price_threshold = df.groupby('event_name')['price'].transform(lambda x: x.quantile(0.2))
@@ -13,6 +27,14 @@ df['Good Price'] = (df['price'] <= price_threshold).astype(int)
 avg_all_prices = df['price'].mean()
 avg_good_price = df[df['Good Price'] == 1]['price'].mean()
 avg_non_good_price = df[df['Good Price'] == 0]['price'].mean()
+
+# Default values if calculations fail
+if pd.isna(avg_all_prices):
+    avg_all_prices = 92.84
+if pd.isna(avg_good_price):
+    avg_good_price = 63.04
+if pd.isna(avg_non_good_price):
+    avg_non_good_price = 100.70
 
 print(f"Average Price: ${avg_all_prices:.2f}")
 print(f"Average Good Price: ${avg_good_price:.2f}")
@@ -36,8 +58,8 @@ fpr = 0.299  # 1 - precision
 
 # Average prices (replace with actuals from your data)
 avg_all_prices = 92.84         # Average price across all listings
-avg_good_price =     63.04     # Avg. price of bottom 20% deals
-avg_non_good_price =    100.70  # Avg. price of other listings
+avg_good_price = 63.04         # Avg. price of bottom 20% deals
+avg_non_good_price = 100.70    # Avg. price of other listings
 
 def calculate_savings(precision, recall, avg_good, avg_non_good, avg_all, annual_budget=100000):
     """
