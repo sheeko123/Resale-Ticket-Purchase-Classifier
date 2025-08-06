@@ -44,8 +44,8 @@ https://resale-ticket-purchase-classifier.streamlit.app/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/Resale-Ticket-Purchase-Classifier.git
-cd ticket-price-analyzer
+git clone https://github.com/sheeko123/Resale-Ticket-Purchase-Classifier.git
+cd Resale-Ticket-Purchase-Classifier
 ```
 
 2. Install the required packages:
