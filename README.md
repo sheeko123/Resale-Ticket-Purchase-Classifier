@@ -4,18 +4,40 @@ A machine learning-powered dashboard for analyzing and predicting good deals in 
 
 ## Overview
 
-This dashboard provides insights into ticket pricing trends and helps identify optimal purchase windows for events at Pier 17, NYC. It uses machine learning to classify "good deals" based on historical pricing data and market dynamics.
+This project uses machine learning to identify below-market resale tickets (“good deals”) on the secondary ticket market. The interactive dashboard helps users:
+
+Spot pricing trends across 170+ events
+
+Understand optimal purchase windows
+
+The model and app are trained and deployed on real resale(StubHub) ticket data from SeatGeek, with a focus on Pier 17 (NYC) events between 2022 and 2024.
 
 ## Features
 
-- Interactive price analysis visualization
-- Model performance metrics and comparisons
-- Feature importance analysis
-- Savings calculator
-- Real-time deal probability predictions
+Interactive Price Analysis
+Visualize price trends over time and across events
+
+Model Performance Metrics
+Evaluate precision, recall, and AUC across different models
+
+Savings Calculator
+Estimate potential $ savings per ticket based on model predictions
+
+Feature Importance Visuals
+Understand which factors influence good deals (e.g. days to event)
 
 ## Dashboard
 https://resale-ticket-purchase-classifier.streamlit.app/
+
+##Model Performance
+
+| Metric                  | Score                      |
+| ----------------------- | -------------------------- |
+| Precision               | 62.3%                      |
+| Recall                  | 77.6%                      |
+| AUC                     | 0.88                       |
+| Avg Savings per Deal    | **\$23.46**                |
+| Optimal Purchase Window | **\~10 days before event** |
 
 
 ## Installation
@@ -64,11 +86,24 @@ ticket-price-analyzer/
 - Time Period: 2022-2024
 - Dataset Size: 27,000 total listings across 170 unique events
 
-## Key Metrics
 
-- Average Savings: $23.46 per ticket
-- Optimal Purchase Window: 10 days before event
-- Model Performance:
-  - Precision: 62.3%
-  - Recall: 77.6%
-  - AUC: 0.88 
+## Why This Matters
+Secondary ticketing is a $1B+ market where consumers often overpay.
+This project shows how data science can drive real savings, inform buyer behavior, and uncover pricing inefficiencies—valuable for roles in:
+
+Data analytics (price trend insights)
+
+Data engineering (pipeline + dashboard design)
+
+Data science (classification, feature importance, prediction)
+
+
+## Future Improvements
+Deploy and integrate with live scraped ticket data.
+Add new venues.
+Improve model generalizability to different event types.
+
+
+## Contact
+Darasheehan101@gmail.com
+
