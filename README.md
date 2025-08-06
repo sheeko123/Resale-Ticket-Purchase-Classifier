@@ -44,7 +44,7 @@ https://resale-ticket-purchase-classifier.streamlit.app/
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/ticket-price-analyzer.git
+git clone https://github.com/yourusername/Resale-Ticket-Purchase-Classifier.git
 cd ticket-price-analyzer
 ```
 
