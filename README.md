@@ -29,7 +29,7 @@ Understand which factors influence good deals (e.g. days to event)
 ## Dashboard
 https://resale-ticket-purchase-classifier.streamlit.app/
 
-##Model Performance
+## Model Performance
 
 | Metric                  | Score                      |
 | ----------------------- | -------------------------- |
