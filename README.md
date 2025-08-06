@@ -107,3 +107,6 @@ Improve model generalizability to different event types.
 ## Contact
 Darasheehan101@gmail.com
 
+## Linked in 
+https://www.linkedin.com/in/dara-sheehan-942532208/
+
